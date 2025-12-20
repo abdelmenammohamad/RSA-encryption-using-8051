@@ -1,0 +1,69 @@
+C51 COMPILER V9.60.7.0   UART                                                              12/15/2025 17:01:29 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE UART
+OBJECT MODULE PLACED IN .\Objects\uart.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE uart.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\uart
+                    -.lst) TABS(2) OBJECT(.\Objects\uart.obj)
+
+line level    source
+
+   1          #include "uart.h"
+   2          
+   3          #define TH1_VALUE (256 - (F_CPU / 12 / 32 / BAUD_RATE))  // Timer 1 reload value
+   4          
+   5          // Initialize UART
+   6          void uart_init(void) {
+   7   1          SCON = 0x50;  // UART mode 1, 8-bit data, REN enabled
+   8   1          TMOD |= 0x20; // Timer 1, mode 2 (8-bit auto-reload)
+   9   1          TH1 = TH1_VALUE;
+  10   1          TL1 = TH1_VALUE;
+  11   1          TR1 = 1;      // Start Timer 1
+  12   1          TI = 1;       // Set TI to indicate ready to send
+  13   1      }
+  14          
+  15          // Send a single byte
+  16          void uart_send_byte(char c) {
+  17   1          SBUF = c;
+  18   1          while (TI == 0);  // Wait until transmission complete
+  19   1          TI = 0;           // Clear TI flag
+  20   1      }
+  21          
+  22          // Receive a single byte
+  23          char uart_receive_byte(void) {
+  24   1          while (RI == 0);  // Wait until a byte is received
+  25   1          RI = 0;           // Clear RI flag
+  26   1          return SBUF;      // Return received byte
+  27   1      }
+  28          
+  29          /* ================= Added Functions Only ================= */
+  30          
+  31          // Send a 2-byte word (MSB first)
+  32          void uart_send_word(uint16_t word) {
+  33   1          uart_send_byte((word >> 8) & 0xFF);  // High byte
+  34   1          uart_send_byte(word & 0xFF);         // Low byte
+  35   1      }
+  36          
+  37          // Receive a 2-byte word (MSB first)
+  38          uint16_t uart_receive_word(void) {
+  39   1          uint16_t word;
+  40   1          word  = ((uint16_t)uart_receive_byte()) << 8; // High byte
+  41   1          word |= (uint16_t)uart_receive_byte();        // Low byte
+  42   1          return word;
+  43   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     76    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+C51 COMPILER V9.60.7.0   UART                                                              12/15/2025 17:01:29 PAGE 2   
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

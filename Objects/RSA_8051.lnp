@@ -1,0 +1,7 @@
+".\Objects\STARTUP.obj",
+".\Objects\math.obj",
+".\Objects\uart.obj",
+".\Objects\RSA.obj",
+".\Objects\main.obj" 
+TO ".\Objects\RSA_8051" 
+PRINT(".\Listings\RSA_8051.m51")

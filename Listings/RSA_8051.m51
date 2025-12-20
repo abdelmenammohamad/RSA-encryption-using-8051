@@ -1,0 +1,529 @@
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                    12/20/2025  20:54:44  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.4.0, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\STARTUP.obj, .\Objects\math.obj, .\Objects\uart.obj, .\Objects\RSA.obj, .\Objects\
+>> main.obj TO .\Objects\RSA_8051 PRINT (.\Listings\RSA_8051.m51)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\STARTUP.obj (?C_STARTUP)
+  .\Objects\math.obj (MATH)
+  .\Objects\uart.obj (UART)
+  .\Objects\RSA.obj (RSA)
+  .\Objects\main.obj (MAIN)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C_INIT)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?IMUL)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?UIDIV)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?ILDPTR)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?ILDOPTR)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?ISTPTR)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?ISTOPTR)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?LMUL)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?ULDIV)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?SLDIV)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?SLCMP)
+
+
+LINK MAP OF MODULE:  .\Objects\RSA_8051 (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     002BH     UNIT         _DATA_GROUP_
+            DATA    0033H     0008H     UNIT         ?DT?_RSA_ENCRYPT?RSA
+            DATA    003BH     0008H     UNIT         ?DT?MAIN
+            IDATA   0043H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     07FDH                  *** GAP ***
+            CODE    0800H     0249H     UNIT         ?C?LIB_CODE
+            CODE    0A49H     011FH     UNIT         ?PR?_MOD_INVERSE?MATH
+            CODE    0B68H     00DBH     UNIT         ?PR?_MOD_EXP?MATH
+            CODE    0C43H     008FH     UNIT         ?PR?MAIN?MAIN
+            CODE    0CD2H     008CH     UNIT         ?C_C51STARTUP
+            CODE    0D5EH     008AH     UNIT         ?PR?_RSA_GENERATE_KEY?RSA
+            CODE    0DE8H     007CH     UNIT         ?PR?HANDLE_SETUP?MAIN
+            CODE    0E64H     0044H     UNIT         ?C?LDIV
+            CODE    0EA8H     003AH     UNIT         ?PR?_FERMAT_TEST?MATH
+            CODE    0EE2H     002AH     UNIT         ?PR?_RSA_ENCRYPT?RSA
+            CODE    0F0CH     002AH     UNIT         ?PR?_RSA_DECRYPT?RSA
+            CODE    0F36H     001DH     UNIT         ?PR?UART_RECEIVE_WORD?UART
+            CODE    0F53H     0012H     UNIT         ?PR?_GCD?MATH
+            CODE    0F65H     0011H     UNIT         ?PR?UART_INIT?UART
+            CODE    0F76H     000EH     UNIT         ?PR?_UART_SEND_WORD?UART
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  12/20/2025  20:54:44  PAGE 2
+
+
+            CODE    0F84H     0008H     UNIT         ?PR?_UART_SEND_BYTE?UART
+            CODE    0F8CH     0008H     UNIT         ?PR?UART_RECEIVE_BYTE?UART
+            CODE    0F94H     0007H     UNIT         ?C_INITSEG
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\RSA_8051 (?C_STARTUP)
+
+
+SEGMENT                              DATA_GROUP 
+  +--> CALLED SEGMENT              START    LENGTH
+--------------------------------------------------
+?C_C51STARTUP                      -----    -----
+  +--> ?PR?MAIN?MAIN
+  +--> ?C_INITSEG
+
+?PR?MAIN?MAIN                      0008H    0004H
+  +--> ?PR?UART_INIT?UART
+  +--> ?PR?HANDLE_SETUP?MAIN
+  +--> ?PR?_UART_SEND_WORD?UART
+  +--> ?PR?_UART_SEND_BYTE?UART
+  +--> ?PR?UART_RECEIVE_BYTE?UART
+  +--> ?PR?_RSA_DECRYPT?RSA
+  +--> ?PR?UART_RECEIVE_WORD?UART
+
+?PR?HANDLE_SETUP?MAIN              000CH    0002H
+  +--> ?PR?UART_RECEIVE_BYTE?UART
+  +--> ?PR?_FERMAT_TEST?MATH
+  +--> ?PR?_UART_SEND_BYTE?UART
+  +--> ?PR?_RSA_GENERATE_KEY?RSA
+
+?PR?_FERMAT_TEST?MATH              -----    -----
+  +--> ?PR?_MOD_EXP?MATH
+
+?PR?_MOD_EXP?MATH                  0014H    000BH
+
+?PR?_RSA_GENERATE_KEY?RSA          000EH    000BH
+  +--> ?PR?_GCD?MATH
+  +--> ?PR?_MOD_INVERSE?MATH
+
+?PR?_MOD_INVERSE?MATH              0019H    001AH
+
+?PR?_UART_SEND_WORD?UART           -----    -----
+  +--> ?PR?_UART_SEND_BYTE?UART
+
+?PR?_RSA_DECRYPT?RSA               000CH    0008H
+  +--> ?PR?_MOD_EXP?MATH
+
+?PR?UART_RECEIVE_WORD?UART         -----    -----
+  +--> ?PR?UART_RECEIVE_BYTE?UART
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\RSA_8051 (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  12/20/2025  20:54:44  PAGE 3
+
+
+
+  -------         MODULE        ?C_STARTUP
+  C:0CD2H         SEGMENT       ?C_C51STARTUP
+  I:0043H         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:0CD5H         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0100H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:0CD2H         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         126
+  C:0CD2H         LINE#         133
+  C:0CD4H         LINE#         134
+  C:0CD5H         LINE#         135
+  C:0CD6H         LINE#         136
+  C:0CD8H         LINE#         185
+  C:0CDBH         LINE#         196
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        MATH
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  C:0A49H         PUBLIC        _mod_inverse
+  C:0EA8H         PUBLIC        _fermat_test
+  C:0F53H         PUBLIC        _gcd
+  C:0B68H         PUBLIC        _mod_exp
+  -------         PROC          _MOD_EXP
+  D:0014H         SYMBOL        base
+  D:0016H         SYMBOL        exp
+  D:0018H         SYMBOL        mod
+  -------         DO            
+  D:001AH         SYMBOL        exp_size
+  D:001BH         SYMBOL        result
+  -------         ENDDO         
+  C:0B68H         LINE#         7
+  C:0B74H         LINE#         8
+  C:0B74H         LINE#         9
+  C:0B77H         LINE#         11
+  C:0B81H         LINE#         14
+  C:0B86H         LINE#         15
+  C:0B91H         LINE#         16
+  C:0B93H         LINE#         17
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  12/20/2025  20:54:44  PAGE 4
+
+
+  C:0B95H         LINE#         20
+  C:0BA0H         LINE#         21
+  C:0BABH         LINE#         23
+  C:0BC0H         LINE#         24
+  C:0BF9H         LINE#         25
+  C:0C2EH         LINE#         26
+  C:0C39H         LINE#         27
+  C:0C3BH         LINE#         28
+  C:0C3EH         LINE#         30
+  C:0C42H         LINE#         31
+  -------         ENDPROC       _MOD_EXP
+  -------         PROC          _GCD
+  D:0006H         SYMBOL        a
+  D:0004H         SYMBOL        b
+  -------         DO            
+  D:0002H         SYMBOL        temp
+  -------         ENDDO         
+  C:0F53H         LINE#         35
+  C:0F53H         LINE#         36
+  C:0F53H         LINE#         39
+  C:0F57H         LINE#         40
+  C:0F57H         LINE#         41
+  C:0F5BH         LINE#         42
+  C:0F5EH         LINE#         43
+  C:0F62H         LINE#         44
+  C:0F64H         LINE#         45
+  C:0F64H         LINE#         46
+  -------         ENDPROC       _GCD
+  -------         PROC          _MOD_INVERSE
+  D:0002H         SYMBOL        e
+  D:0019H         SYMBOL        phi
+  -------         DO            
+  D:001BH         SYMBOL        t
+  D:001FH         SYMBOL        newt
+  D:0023H         SYMBOL        r
+  D:0027H         SYMBOL        newr
+  D:002BH         SYMBOL        q
+  D:002FH         SYMBOL        tmp
+  -------         ENDDO         
+  C:0A49H         LINE#         52
+  C:0A4DH         LINE#         53
+  C:0A4DH         LINE#         54
+  C:0A56H         LINE#         55
+  C:0A5FH         LINE#         56
+  C:0A69H         LINE#         57
+  C:0A71H         LINE#         61
+  C:0A82H         LINE#         62
+  C:0A9DH         LINE#         65
+  C:0AA9H         LINE#         66
+  C:0AD7H         LINE#         67
+  C:0AE3H         LINE#         70
+  C:0AEFH         LINE#         71
+  C:0B1DH         LINE#         72
+  C:0B29H         LINE#         73
+  C:0B2CH         LINE#         76
+  C:0B44H         LINE#         79
+  C:0B4AH         LINE#         80
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  12/20/2025  20:54:44  PAGE 5
+
+
+  C:0B63H         LINE#         81
+  C:0B63H         LINE#         83
+  C:0B67H         LINE#         84
+  -------         ENDPROC       _MOD_INVERSE
+  -------         PROC          _FERMAT_TEST
+  D:0007H         SYMBOL        x
+  C:0EA8H         LINE#         88
+  C:0EA8H         LINE#         90
+  C:0EB1H         LINE#         91
+  C:0EBCH         LINE#         94
+  C:0EC3H         LINE#         98
+  C:0EDCH         LINE#         99
+  C:0EDFH         LINE#         100
+  C:0EDFH         LINE#         102
+  C:0EE1H         LINE#         103
+  -------         ENDPROC       _FERMAT_TEST
+  -------         ENDMOD        MATH
+
+  -------         MODULE        UART
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  B:0098H.0       PUBLIC        RI
+  B:0098H.1       PUBLIC        TI
+  C:0F8CH         PUBLIC        uart_receive_byte
+  C:0F36H         PUBLIC        uart_receive_word
+  D:0099H         PUBLIC        SBUF
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:008DH         PUBLIC        TH1
+  D:008BH         PUBLIC        TL1
+  C:0F65H         PUBLIC        uart_init
+  B:0088H.6       PUBLIC        TR1
+  C:0F84H         PUBLIC        _uart_send_byte
+  C:0F76H         PUBLIC        _uart_send_word
+  -------         PROC          UART_INIT
+  C:0F65H         LINE#         6
+  C:0F65H         LINE#         7
+  C:0F68H         LINE#         8
+  C:0F6BH         LINE#         9
+  C:0F6EH         LINE#         10
+  C:0F71H         LINE#         11
+  C:0F73H         LINE#         12
+  C:0F75H         LINE#         13
+  -------         ENDPROC       UART_INIT
+  -------         PROC          _UART_SEND_BYTE
+  D:0007H         SYMBOL        c
+  C:0F84H         LINE#         16
+  C:0F84H         LINE#         17
+  C:0F86H         LINE#         18
+  C:0F89H         LINE#         19
+  C:0F8BH         LINE#         20
+  -------         ENDPROC       _UART_SEND_BYTE
+  -------         PROC          UART_RECEIVE_BYTE
+  C:0F8CH         LINE#         23
+  C:0F8CH         LINE#         24
+  C:0F8FH         LINE#         25
+  C:0F91H         LINE#         26
+  C:0F93H         LINE#         27
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  12/20/2025  20:54:44  PAGE 6
+
+
+  -------         ENDPROC       UART_RECEIVE_BYTE
+  -------         PROC          _UART_SEND_WORD
+  D:0004H         SYMBOL        word
+  C:0F76H         LINE#         32
+  C:0F7AH         LINE#         33
+  C:0F7FH         LINE#         34
+  -------         ENDPROC       _UART_SEND_WORD
+  -------         PROC          UART_RECEIVE_WORD
+  -------         DO            
+  D:0004H         SYMBOL        word
+  -------         ENDDO         
+  C:0F36H         LINE#         38
+  C:0F36H         LINE#         40
+  C:0F41H         LINE#         41
+  C:0F4EH         LINE#         42
+  C:0F52H         LINE#         43
+  -------         ENDPROC       UART_RECEIVE_WORD
+  -------         ENDMOD        UART
+
+  -------         MODULE        RSA
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  C:0D5EH         PUBLIC        _rsa_generate_key
+  C:0F0CH         PUBLIC        _rsa_decrypt
+  C:0EE2H         PUBLIC        _rsa_encrypt
+  -------         PROC          _RSA_GENERATE_KEY
+  D:000EH         SYMBOL        p
+  D:000FH         SYMBOL        q
+  D:0010H         SYMBOL        key
+  -------         DO            
+  D:0013H         SYMBOL        n
+  D:0015H         SYMBOL        phi
+  D:0006H         SYMBOL        d
+  D:0017H         SYMBOL        e_val
+  -------         ENDDO         
+  C:0D5EH         LINE#         18
+  C:0D68H         LINE#         22
+  C:0D73H         LINE#         23
+  C:0D8EH         LINE#         26
+  C:0D95H         LINE#         29
+  C:0DAFH         LINE#         30
+  C:0DB2H         LINE#         31
+  C:0DB2H         LINE#         34
+  C:0DBDH         LINE#         37
+  C:0DCBH         LINE#         38
+  C:0DDCH         LINE#         39
+  C:0DE5H         LINE#         41
+  C:0DE7H         LINE#         42
+  -------         ENDPROC       _RSA_GENERATE_KEY
+  -------         PROC          _RSA_ENCRYPT
+  D:0006H         SYMBOL        plaintext
+  D:0035H         SYMBOL        ciphertext
+  D:0038H         SYMBOL        key
+  C:0EE2H         LINE#         45
+  C:0EE8H         LINE#         46
+  -------         ENDPROC       _RSA_ENCRYPT
+  -------         PROC          _RSA_DECRYPT
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  12/20/2025  20:54:44  PAGE 7
+
+
+  D:0006H         SYMBOL        ciphertext
+  D:000EH         SYMBOL        plaintext
+  D:0011H         SYMBOL        key
+  C:0F0CH         LINE#         50
+  C:0F12H         LINE#         51
+  -------         ENDPROC       _RSA_DECRYPT
+  -------         ENDMOD        RSA
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:003BH         PUBLIC        e_sent
+  D:00A0H         PUBLIC        P2
+  B:00B0H.3       PUBLIC        S0
+  D:00B0H         PUBLIC        P3
+  B:00B0H.4       PUBLIC        S1
+  C:0DE8H         PUBLIC        handle_setup
+  C:0C43H         PUBLIC        main
+  D:003CH         PUBLIC        setup_done
+  B:00A0H.0       PUBLIC        ERROR_LED
+  D:003DH         PUBLIC        key
+  B:00A0H.1       PUBLIC        E_ERROR_LED
+  -------         PROC          HANDLE_SETUP
+  -------         DO            
+  D:000CH         SYMBOL        p_val
+  D:000DH         SYMBOL        q_val
+  -------         ENDDO         
+  C:0DE8H         LINE#         21
+  C:0DE8H         LINE#         24
+  C:0DEDH         LINE#         25
+  C:0DEFH         LINE#         27
+  C:0DEFH         LINE#         30
+  C:0DEFH         LINE#         31
+  C:0DF4H         LINE#         32
+  C:0DFAH         LINE#         33
+  C:0DFCH         LINE#         34
+  C:0E01H         LINE#         35
+  C:0E03H         LINE#         36
+  C:0E05H         LINE#         37
+  C:0E05H         LINE#         38
+  C:0E07H         LINE#         39
+  C:0E0CH         LINE#         40
+  C:0E0CH         LINE#         41
+  C:0E0EH         LINE#         44
+  C:0E0EH         LINE#         45
+  C:0E13H         LINE#         46
+  C:0E19H         LINE#         47
+  C:0E1BH         LINE#         48
+  C:0E20H         LINE#         49
+  C:0E25H         LINE#         50
+  C:0E27H         LINE#         51
+  C:0E27H         LINE#         52
+  C:0E29H         LINE#         53
+  C:0E2EH         LINE#         54
+  C:0E2EH         LINE#         55
+  C:0E30H         LINE#         58
+  C:0E30H         LINE#         60
+  C:0E40H         LINE#         61
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  12/20/2025  20:54:44  PAGE 8
+
+
+  C:0E42H         LINE#         62
+  C:0E47H         LINE#         63
+  C:0E4CH         LINE#         64
+  C:0E51H         LINE#         65
+  C:0E54H         LINE#         66
+  C:0E57H         LINE#         67
+  C:0E58H         LINE#         68
+  C:0E58H         LINE#         69
+  C:0E5AH         LINE#         70
+  C:0E5FH         LINE#         73
+  C:0E62H         LINE#         74
+  C:0E62H         LINE#         75
+  -------         ENDPROC       HANDLE_SETUP
+  -------         PROC          MAIN
+  -------         DO            
+  D:0008H         SYMBOL        ciphertext
+  D:000AH         SYMBOL        plaintext
+  D:0007H         SYMBOL        mode
+  -------         ENDDO         
+  C:0C43H         LINE#         78
+  C:0C43H         LINE#         82
+  C:0C46H         LINE#         83
+  C:0C48H         LINE#         84
+  C:0C4AH         LINE#         86
+  C:0C4AH         LINE#         87
+  C:0C57H         LINE#         89
+  C:0C64H         LINE#         90
+  C:0C64H         LINE#         91
+  C:0C67H         LINE#         92
+  C:0C69H         LINE#         94
+  C:0C69H         LINE#         95
+  C:0C71H         LINE#         96
+  C:0C78H         LINE#         97
+  C:0C7DH         LINE#         98
+  C:0C80H         LINE#         99
+  C:0C80H         LINE#         100
+  C:0C82H         LINE#         102
+  C:0C82H         LINE#         103
+  C:0C86H         LINE#         104
+  C:0C91H         LINE#         105
+  C:0CA4H         LINE#         106
+  C:0CA9H         LINE#         107
+  C:0CA9H         LINE#         108
+  C:0CABH         LINE#         110
+  C:0CABH         LINE#         111
+  C:0CAFH         LINE#         112
+  C:0CB6H         LINE#         113
+  C:0CC8H         LINE#         114
+  C:0CCFH         LINE#         115
+  C:0CCFH         LINE#         116
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        MAIN
+
+  -------         MODULE        ?C?IMUL
+  C:0800H         PUBLIC        ?C?IMUL
+  -------         ENDMOD        ?C?IMUL
+
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  12/20/2025  20:54:44  PAGE 9
+
+
+  -------         MODULE        ?C?UIDIV
+  C:0812H         PUBLIC        ?C?UIDIV
+  -------         ENDMOD        ?C?UIDIV
+
+  -------         MODULE        ?C?ILDPTR
+  C:0867H         PUBLIC        ?C?ILDPTR
+  -------         ENDMOD        ?C?ILDPTR
+
+  -------         MODULE        ?C?ILDOPTR
+  C:0892H         PUBLIC        ?C?ILDOPTR
+  -------         ENDMOD        ?C?ILDOPTR
+
+  -------         MODULE        ?C?ISTPTR
+  C:08CAH         PUBLIC        ?C?ISTPTR
+  -------         ENDMOD        ?C?ISTPTR
+
+  -------         MODULE        ?C?ISTOPTR
+  C:08E9H         PUBLIC        ?C?ISTOPTR
+  -------         ENDMOD        ?C?ISTOPTR
+
+  -------         MODULE        ?C?LMUL
+  C:0916H         PUBLIC        ?C?LMUL
+  -------         ENDMOD        ?C?LMUL
+
+  -------         MODULE        ?C?ULDIV
+  C:09A1H         PUBLIC        ?C?ULDIV
+  -------         ENDMOD        ?C?ULDIV
+
+  -------         MODULE        ?C?SLDIV
+  C:0E64H         PUBLIC        ?C?SLDIV
+  -------         ENDMOD        ?C?SLDIV
+
+  -------         MODULE        ?C?SLCMP
+  C:0A33H         PUBLIC        ?C?SLCMP
+  -------         ENDMOD        ?C?SLCMP
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_RSA_ENCRYPT?RSA
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0490H BYTE (57%) *
+******************************************************************************
+
+Program Size: data=68.0 xdata=0 code=1950
+LINK/LOCATE RUN COMPLETE.  1 WARNING(S),  0 ERROR(S)
