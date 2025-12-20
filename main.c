@@ -28,7 +28,8 @@ void handle_setup(void) {
 
     // 1. Loop for P
     while (1) {
-        p_val = (uint8_t)uart_receive_byte(); 
+        p_val = (uint8_t)uart_receive_byte();
+				P0=p_val;
         if (fermat_test(p_val) == TRUE) {
             ERROR_LED = 0;      // P is valid
             uart_send_byte('P'); // Acknowledge P is OK

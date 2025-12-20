@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.7.0   MAIN                                                              12/20/2025 20:54:43 PAGE 1   
+C51 COMPILER V9.60.7.0   MAIN                                                              12/20/2025 21:27:20 PAGE 1   
 
 
 C51 COMPILER V9.60.7.0, COMPILATION OF MODULE MAIN
@@ -38,103 +38,104 @@ line level    source
   28   1      
   29   1          // 1. Loop for P
   30   1          while (1) {
-  31   2              p_val = (uint8_t)uart_receive_byte(); 
-  32   2              if (fermat_test(p_val) == TRUE) {
-  33   3                  ERROR_LED = 0;      // P is valid
-  34   3                  uart_send_byte('P'); // Acknowledge P is OK
-  35   3                  uart_send_byte('\n');
-  36   3                  break; 
-  37   3              } else {
-  38   3                  ERROR_LED = 1;      // P failed
-  39   3                  uart_send_byte('R'); // Request retry for P
-  40   3              }
-  41   2          }
-  42   1      
-  43   1          // 2. Loop for Q
-  44   1          while (1) {
-  45   2              q_val = (uint8_t)uart_receive_byte(); 
-  46   2              if (fermat_test(q_val) == TRUE) {
-  47   3                  ERROR_LED = 0;      // Q is valid
-  48   3                  uart_send_byte('Q'); // Acknowledge Q is OK
-  49   3                  uart_send_byte('\n');
-  50   3                  break; 
-  51   3              } else {
-  52   3                  ERROR_LED = 1;      // Q failed
-  53   3                  uart_send_byte('R'); // Request retry for Q
-  54   3              }
-C51 COMPILER V9.60.7.0   MAIN                                                              12/20/2025 20:54:43 PAGE 2   
+  31   2              p_val = (uint8_t)uart_receive_byte();
+  32   2              P0=p_val;
+  33   2              if (fermat_test(p_val) == TRUE) {
+  34   3                  ERROR_LED = 0;      // P is valid
+  35   3                  uart_send_byte('P'); // Acknowledge P is OK
+  36   3                  uart_send_byte('\n');
+  37   3                  break; 
+  38   3              } else {
+  39   3                  ERROR_LED = 1;      // P failed
+  40   3                  uart_send_byte('R'); // Request retry for P
+  41   3              }
+  42   2          }
+  43   1      
+  44   1          // 2. Loop for Q
+  45   1          while (1) {
+  46   2              q_val = (uint8_t)uart_receive_byte(); 
+  47   2              if (fermat_test(q_val) == TRUE) {
+  48   3                  ERROR_LED = 0;      // Q is valid
+  49   3                  uart_send_byte('Q'); // Acknowledge Q is OK
+  50   3                  uart_send_byte('\n');
+  51   3                  break; 
+  52   3              } else {
+  53   3                  ERROR_LED = 1;      // Q failed
+  54   3                  uart_send_byte('R'); // Request retry for Q
+C51 COMPILER V9.60.7.0   MAIN                                                              12/20/2025 21:27:20 PAGE 2   
 
-  55   2          }
-  56   1      
-  57   1          // 3. Loop for E and Key Generation
-  58   1          while (1) {
-  59   2              // Try to generate key using e from Port 1
-  60   2              if (rsa_generate_key(p_val, q_val, &key) == TRUE) {
-  61   3                  E_ERROR_LED = 0;      
-  62   3                  uart_send_byte('O'); 
-  63   3                  uart_send_byte('K');
-  64   3                  uart_send_byte('\n'); 
-  65   3                  setup_done = TRUE;
-  66   3                  e_sent = FALSE;
-  67   3                  break; 
-  68   3              } else {
-  69   3                  E_ERROR_LED = 1;      
-  70   3                  uart_send_byte('E');  // Notify UART that Port P1 value is invalid
-  71   3                  // In this version, we wait for the user to change P1 
-  72   3                  // and perhaps send a dummy byte to trigger a re-check
-  73   3                  uart_receive_byte(); 
-  74   3              }
-  75   2          }
-  76   1      }
-  77          
-  78          void main(void) {
-  79   1          uint16_t ciphertext, plaintext;
-  80   1          uint8_t mode;
-  81   1      
-  82   1          uart_init();
-  83   1          ERROR_LED = 0;
-  84   1          E_ERROR_LED = 0; // Initialize second LED to OFF
-  85   1      
-  86   1          while (1) {
-  87   2              mode = ((uint8_t)S1 << 1) | (uint8_t)S0;
-  88   2      
-  89   2              switch (mode) {
-  90   3                  case 0: /* Mode 00: Setup */
-  91   3                      handle_setup();
-  92   3                      break;
-  93   3                  
-  94   3                  case 1: /* Mode 01: Send public exponent e */
-  95   3                      if (setup_done && !e_sent) {
-  96   4                          uart_send_word(key.e);
-  97   4                          uart_send_byte('\n');
-  98   4                          e_sent = TRUE; 
-  99   4                      }
- 100   3                      break;
- 101   3      
- 102   3                  case 2: /* Mode 10: Receive byte, decrypt, and send */
- 103   3                      if (setup_done) {
- 104   4                          ciphertext = (uint16_t)uart_receive_byte();
- 105   4                          rsa_decrypt(ciphertext, &plaintext, &key);
- 106   4                          uart_send_byte((uint8_t)plaintext);
- 107   4                      }
- 108   3                      break;
- 109   3      
- 110   3                  case 3: /* Mode 11: Receive 16-bit ciphertext, decrypt */
- 111   3                      if (setup_done) {
- 112   4                          ciphertext = uart_receive_word();
- 113   4                          rsa_decrypt(ciphertext, &plaintext, &key);
- 114   4                          uart_send_word(plaintext);
- 115   4                      }
- 116   3                      break;
-C51 COMPILER V9.60.7.0   MAIN                                                              12/20/2025 20:54:43 PAGE 3   
+  55   3              }
+  56   2          }
+  57   1      
+  58   1          // 3. Loop for E and Key Generation
+  59   1          while (1) {
+  60   2              // Try to generate key using e from Port 1
+  61   2              if (rsa_generate_key(p_val, q_val, &key) == TRUE) {
+  62   3                  E_ERROR_LED = 0;      
+  63   3                  uart_send_byte('O'); 
+  64   3                  uart_send_byte('K');
+  65   3                  uart_send_byte('\n'); 
+  66   3                  setup_done = TRUE;
+  67   3                  e_sent = FALSE;
+  68   3                  break; 
+  69   3              } else {
+  70   3                  E_ERROR_LED = 1;      
+  71   3                  uart_send_byte('E');  // Notify UART that Port P1 value is invalid
+  72   3                  // In this version, we wait for the user to change P1 
+  73   3                  // and perhaps send a dummy byte to trigger a re-check
+  74   3                  uart_receive_byte(); 
+  75   3              }
+  76   2          }
+  77   1      }
+  78          
+  79          void main(void) {
+  80   1          uint16_t ciphertext, plaintext;
+  81   1          uint8_t mode;
+  82   1      
+  83   1          uart_init();
+  84   1          ERROR_LED = 0;
+  85   1          E_ERROR_LED = 0; // Initialize second LED to OFF
+  86   1      
+  87   1          while (1) {
+  88   2              mode = ((uint8_t)S1 << 1) | (uint8_t)S0;
+  89   2      
+  90   2              switch (mode) {
+  91   3                  case 0: /* Mode 00: Setup */
+  92   3                      handle_setup();
+  93   3                      break;
+  94   3                  
+  95   3                  case 1: /* Mode 01: Send public exponent e */
+  96   3                      if (setup_done && !e_sent) {
+  97   4                          uart_send_word(key.e);
+  98   4                          uart_send_byte('\n');
+  99   4                          e_sent = TRUE; 
+ 100   4                      }
+ 101   3                      break;
+ 102   3      
+ 103   3                  case 2: /* Mode 10: Receive byte, decrypt, and send */
+ 104   3                      if (setup_done) {
+ 105   4                          ciphertext = (uint16_t)uart_receive_byte();
+ 106   4                          rsa_decrypt(ciphertext, &plaintext, &key);
+ 107   4                          uart_send_byte((uint8_t)plaintext);
+ 108   4                      }
+ 109   3                      break;
+ 110   3      
+ 111   3                  case 3: /* Mode 11: Receive 16-bit ciphertext, decrypt */
+ 112   3                      if (setup_done) {
+ 113   4                          ciphertext = uart_receive_word();
+ 114   4                          rsa_decrypt(ciphertext, &plaintext, &key);
+ 115   4                          uart_send_word(plaintext);
+ 116   4                      }
+C51 COMPILER V9.60.7.0   MAIN                                                              12/20/2025 21:27:20 PAGE 3   
 
- 117   3              }
- 118   2          }
- 119   1      }
+ 117   3                      break;
+ 118   3              }
+ 119   2          }
+ 120   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    267    ----
+   CODE SIZE        =    272    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
