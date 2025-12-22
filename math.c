@@ -8,6 +8,7 @@ uint16_t mod_exp(uint16_t base, uint16_t exp, uint16_t mod) // Changed return ty
 {
     char exp_size = 16;
     uint32_t result;
+		base = base % mod;
     if (exp == 0) return (uint16_t)1;
 
     //move the MSB of exp till it react max index
@@ -29,6 +30,25 @@ uint16_t mod_exp(uint16_t base, uint16_t exp, uint16_t mod) // Changed return ty
 
     return result;
 }
+/* ================= Modular Exponentiation(another method with less one varibale) ================= */
+/* Computes (base^exp) % mod using square-and-multiply */
+/*uint16_t mod_exp(uint16_t base, uint16_t exp, uint16_t mod)
+{
+    uint32_t result = 1;
+    base = base % mod;
+
+    while (exp > 0) {
+        if (exp & 1) {
+            result = (result * base) % mod;
+        }
+        exp >>= 1;
+        base = (base * base) % mod;
+    }
+
+    return (uint16_t)result;
+}
+*/
+
 
 /* ================= GCD ================= */
 /* Euclidean Algorithm */
