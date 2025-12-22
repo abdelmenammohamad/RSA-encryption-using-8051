@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                    12/20/2025  21:27:20  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                    12/22/2025  20:47:07  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22.4.0, INVOKED BY:
@@ -16,6 +16,7 @@ INPUT MODULES INCLUDED:
   .\Objects\RSA.obj (RSA)
   .\Objects\main.obj (MAIN)
   C:\KEIL_V5\C51\LIB\C51S.LIB (?C_INIT)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?COPY)
   C:\KEIL_V5\C51\LIB\C51S.LIB (?C?IMUL)
   C:\KEIL_V5\C51\LIB\C51S.LIB (?C?UIDIV)
   C:\KEIL_V5\C51\LIB\C51S.LIB (?C?ILDPTR)
@@ -44,41 +45,43 @@ LINK MAP OF MODULE:  .\Objects\RSA_8051 (?C_STARTUP)
             * * * * * * *   C O D E   M E M O R Y   * * * * * * *
             CODE    0000H     0003H     ABSOLUTE     
                     0003H     07FDH                  *** GAP ***
-            CODE    0800H     0249H     UNIT         ?C?LIB_CODE
-            CODE    0A49H     011FH     UNIT         ?PR?_MOD_INVERSE?MATH
-            CODE    0B68H     00DBH     UNIT         ?PR?_MOD_EXP?MATH
-            CODE    0C43H     008FH     UNIT         ?PR?MAIN?MAIN
-            CODE    0CD2H     008CH     UNIT         ?C_C51STARTUP
-            CODE    0D5EH     008AH     UNIT         ?PR?_RSA_GENERATE_KEY?RSA
-            CODE    0DE8H     0081H     UNIT         ?PR?HANDLE_SETUP?MAIN
-            CODE    0E69H     0044H     UNIT         ?C?LDIV
-            CODE    0EADH     003AH     UNIT         ?PR?_FERMAT_TEST?MATH
-            CODE    0EE7H     002AH     UNIT         ?PR?_RSA_ENCRYPT?RSA
-            CODE    0F11H     002AH     UNIT         ?PR?_RSA_DECRYPT?RSA
-            CODE    0F3BH     001DH     UNIT         ?PR?UART_RECEIVE_WORD?UART
-            CODE    0F58H     0012H     UNIT         ?PR?_GCD?MATH
-            CODE    0F6AH     0011H     UNIT         ?PR?UART_INIT?UART
-            CODE    0F7BH     000EH     UNIT         ?PR?_UART_SEND_WORD?UART
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  12/20/2025  21:27:20  PAGE 2
+            CODE    0800H     033FH     UNIT         ?C?LIB_CODE
+            CODE    0B3FH     011FH     UNIT         ?PR?_MOD_INVERSE?MATH
+            CODE    0C5EH     00DBH     UNIT         ?PR?_MOD_EXP?MATH
+            CODE    0D39H     008FH     UNIT         ?PR?MAIN?MAIN
+            CODE    0DC8H     008CH     UNIT         ?C_C51STARTUP
+            CODE    0E54H     008AH     UNIT         ?PR?_RSA_GENERATE_KEY?RSA
+            CODE    0EDEH     0088H     UNIT         ?PR?UART_RECEIVE_DECIMAL?UART
+            CODE    0F66H     0081H     UNIT         ?PR?HANDLE_SETUP?MAIN
+            CODE    0FE7H     0044H     UNIT         ?C?LDIV
+            CODE    102BH     003AH     UNIT         ?PR?_FERMAT_TEST?MATH
+            CODE    1065H     002AH     UNIT         ?PR?_RSA_ENCRYPT?RSA
+            CODE    108FH     002AH     UNIT         ?PR?_RSA_DECRYPT?RSA
+            CODE    10B9H     001DH     UNIT         ?PR?UART_RECEIVE_WORD?UART
+            CODE    10D6H     0012H     UNIT         ?PR?_GCD?MATH
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  12/22/2025  20:47:07  PAGE 2
 
 
-            CODE    0F89H     0008H     UNIT         ?PR?_UART_SEND_BYTE?UART
-            CODE    0F91H     0008H     UNIT         ?PR?UART_RECEIVE_BYTE?UART
-            CODE    0F99H     0007H     UNIT         ?C_INITSEG
+            CODE    10E8H     0011H     UNIT         ?PR?UART_INIT?UART
+            CODE    10F9H     000EH     UNIT         ?PR?_UART_SEND_WORD?UART
+            CODE    1107H     0008H     UNIT         ?PR?_UART_SEND_BYTE?UART
+            CODE    110FH     0008H     UNIT         ?PR?UART_RECEIVE_BYTE?UART
+            CODE    1117H     0007H     UNIT         ?C_INITSEG
+            CODE    111EH     0003H     UNIT         ?CO?UART
 
 
 
 OVERLAY MAP OF MODULE:   .\Objects\RSA_8051 (?C_STARTUP)
 
 
-SEGMENT                              DATA_GROUP 
-  +--> CALLED SEGMENT              START    LENGTH
---------------------------------------------------
-?C_C51STARTUP                      -----    -----
+SEGMENT                                 DATA_GROUP 
+  +--> CALLED SEGMENT                 START    LENGTH
+-----------------------------------------------------
+?C_C51STARTUP                         -----    -----
   +--> ?PR?MAIN?MAIN
   +--> ?C_INITSEG
 
-?PR?MAIN?MAIN                      0008H    0004H
+?PR?MAIN?MAIN                         0008H    0004H
   +--> ?PR?UART_INIT?UART
   +--> ?PR?HANDLE_SETUP?MAIN
   +--> ?PR?_UART_SEND_WORD?UART
@@ -87,30 +90,38 @@ SEGMENT                              DATA_GROUP
   +--> ?PR?_RSA_DECRYPT?RSA
   +--> ?PR?UART_RECEIVE_WORD?UART
 
-?PR?HANDLE_SETUP?MAIN              000CH    0002H
-  +--> ?PR?UART_RECEIVE_BYTE?UART
+?PR?HANDLE_SETUP?MAIN                 000CH    0002H
+  +--> ?PR?UART_RECEIVE_DECIMAL?UART
   +--> ?PR?_FERMAT_TEST?MATH
   +--> ?PR?_UART_SEND_BYTE?UART
   +--> ?PR?_RSA_GENERATE_KEY?RSA
+  +--> ?PR?UART_RECEIVE_BYTE?UART
 
-?PR?_FERMAT_TEST?MATH              -----    -----
+?PR?UART_RECEIVE_DECIMAL?UART         000EH    0004H
+  +--> ?CO?UART
+  +--> ?PR?UART_RECEIVE_BYTE?UART
+
+?PR?_FERMAT_TEST?MATH                 -----    -----
   +--> ?PR?_MOD_EXP?MATH
 
-?PR?_MOD_EXP?MATH                  0014H    000BH
+?PR?_MOD_EXP?MATH                     0014H    000BH
 
-?PR?_RSA_GENERATE_KEY?RSA          000EH    000BH
+?PR?_RSA_GENERATE_KEY?RSA             000EH    000BH
   +--> ?PR?_GCD?MATH
   +--> ?PR?_MOD_INVERSE?MATH
 
-?PR?_MOD_INVERSE?MATH              0019H    001AH
+?PR?_MOD_INVERSE?MATH                 0019H    001AH
 
-?PR?_UART_SEND_WORD?UART           -----    -----
+?PR?_UART_SEND_WORD?UART              -----    -----
   +--> ?PR?_UART_SEND_BYTE?UART
 
-?PR?_RSA_DECRYPT?RSA               000CH    0008H
+?PR?_RSA_DECRYPT?RSA                  000CH    0008H
   +--> ?PR?_MOD_EXP?MATH
 
-?PR?UART_RECEIVE_WORD?UART         -----    -----
+?PR?UART_RECEIVE_WORD?UART            -----    -----
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  12/22/2025  20:47:07  PAGE 3
+
+
   +--> ?PR?UART_RECEIVE_BYTE?UART
 
 
@@ -119,12 +130,9 @@ SYMBOL TABLE OF MODULE:  .\Objects\RSA_8051 (?C_STARTUP)
 
   VALUE           TYPE          NAME
   ----------------------------------
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  12/20/2025  21:27:20  PAGE 3
-
-
 
   -------         MODULE        ?C_STARTUP
-  C:0CD2H         SEGMENT       ?C_C51STARTUP
+  C:0DC8H         SEGMENT       ?C_C51STARTUP
   I:0043H         SEGMENT       ?STACK
   C:0000H         PUBLIC        ?C_STARTUP
   D:00E0H         SYMBOL        ACC
@@ -134,7 +142,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\RSA_8051 (?C_STARTUP)
   N:0000H         SYMBOL        IBPSTACK
   N:0100H         SYMBOL        IBPSTACKTOP
   N:0080H         SYMBOL        IDATALEN
-  C:0CD5H         SYMBOL        IDATALOOP
+  C:0DCBH         SYMBOL        IDATALOOP
   N:0000H         SYMBOL        PBPSTACK
   N:0100H         SYMBOL        PBPSTACKTOP
   N:0000H         SYMBOL        PDATALEN
@@ -143,26 +151,26 @@ SYMBOL TABLE OF MODULE:  .\Objects\RSA_8051 (?C_STARTUP)
   N:0000H         SYMBOL        PPAGEENABLE
   D:00A0H         SYMBOL        PPAGE_SFR
   D:0081H         SYMBOL        SP
-  C:0CD2H         SYMBOL        STARTUP1
+  C:0DC8H         SYMBOL        STARTUP1
   N:0000H         SYMBOL        XBPSTACK
   N:0000H         SYMBOL        XBPSTACKTOP
   N:0000H         SYMBOL        XDATALEN
   N:0000H         SYMBOL        XDATASTART
   C:0000H         LINE#         126
-  C:0CD2H         LINE#         133
-  C:0CD4H         LINE#         134
-  C:0CD5H         LINE#         135
-  C:0CD6H         LINE#         136
-  C:0CD8H         LINE#         185
-  C:0CDBH         LINE#         196
+  C:0DC8H         LINE#         133
+  C:0DCAH         LINE#         134
+  C:0DCBH         LINE#         135
+  C:0DCCH         LINE#         136
+  C:0DCEH         LINE#         185
+  C:0DD1H         LINE#         196
   -------         ENDMOD        ?C_STARTUP
 
   -------         MODULE        MATH
   C:0000H         SYMBOL        _ICE_DUMMY_
-  C:0A49H         PUBLIC        _mod_inverse
-  C:0EADH         PUBLIC        _fermat_test
-  C:0F58H         PUBLIC        _gcd
-  C:0B68H         PUBLIC        _mod_exp
+  C:0B3FH         PUBLIC        _mod_inverse
+  C:102BH         PUBLIC        _fermat_test
+  C:10D6H         PUBLIC        _gcd
+  C:0C5EH         PUBLIC        _mod_exp
   -------         PROC          _MOD_EXP
   D:0014H         SYMBOL        base
   D:0016H         SYMBOL        exp
@@ -171,27 +179,27 @@ SYMBOL TABLE OF MODULE:  .\Objects\RSA_8051 (?C_STARTUP)
   D:001AH         SYMBOL        exp_size
   D:001BH         SYMBOL        result
   -------         ENDDO         
-  C:0B68H         LINE#         7
-  C:0B74H         LINE#         8
-  C:0B74H         LINE#         9
-  C:0B77H         LINE#         11
-  C:0B81H         LINE#         14
-  C:0B86H         LINE#         15
-  C:0B91H         LINE#         16
-  C:0B93H         LINE#         17
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  12/20/2025  21:27:20  PAGE 4
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  12/22/2025  20:47:07  PAGE 4
 
 
-  C:0B95H         LINE#         20
-  C:0BA0H         LINE#         21
-  C:0BABH         LINE#         23
-  C:0BC0H         LINE#         24
-  C:0BF9H         LINE#         25
-  C:0C2EH         LINE#         26
-  C:0C39H         LINE#         27
-  C:0C3BH         LINE#         28
-  C:0C3EH         LINE#         30
-  C:0C42H         LINE#         31
+  C:0C5EH         LINE#         7
+  C:0C6AH         LINE#         8
+  C:0C6AH         LINE#         9
+  C:0C6DH         LINE#         11
+  C:0C77H         LINE#         14
+  C:0C7CH         LINE#         15
+  C:0C87H         LINE#         16
+  C:0C89H         LINE#         17
+  C:0C8BH         LINE#         20
+  C:0C96H         LINE#         21
+  C:0CA1H         LINE#         23
+  C:0CB6H         LINE#         24
+  C:0CEFH         LINE#         25
+  C:0D24H         LINE#         26
+  C:0D2FH         LINE#         27
+  C:0D31H         LINE#         28
+  C:0D34H         LINE#         30
+  C:0D38H         LINE#         31
   -------         ENDPROC       _MOD_EXP
   -------         PROC          _GCD
   D:0006H         SYMBOL        a
@@ -199,16 +207,16 @@ SYMBOL TABLE OF MODULE:  .\Objects\RSA_8051 (?C_STARTUP)
   -------         DO            
   D:0002H         SYMBOL        temp
   -------         ENDDO         
-  C:0F58H         LINE#         35
-  C:0F58H         LINE#         36
-  C:0F58H         LINE#         39
-  C:0F5CH         LINE#         40
-  C:0F5CH         LINE#         41
-  C:0F60H         LINE#         42
-  C:0F63H         LINE#         43
-  C:0F67H         LINE#         44
-  C:0F69H         LINE#         45
-  C:0F69H         LINE#         46
+  C:10D6H         LINE#         35
+  C:10D6H         LINE#         36
+  C:10D6H         LINE#         39
+  C:10DAH         LINE#         40
+  C:10DAH         LINE#         41
+  C:10DEH         LINE#         42
+  C:10E1H         LINE#         43
+  C:10E5H         LINE#         44
+  C:10E7H         LINE#         45
+  C:10E7H         LINE#         46
   -------         ENDPROC       _GCD
   -------         PROC          _MOD_INVERSE
   D:0002H         SYMBOL        e
@@ -221,42 +229,42 @@ SYMBOL TABLE OF MODULE:  .\Objects\RSA_8051 (?C_STARTUP)
   D:002BH         SYMBOL        q
   D:002FH         SYMBOL        tmp
   -------         ENDDO         
-  C:0A49H         LINE#         52
-  C:0A4DH         LINE#         53
-  C:0A4DH         LINE#         54
-  C:0A56H         LINE#         55
-  C:0A5FH         LINE#         56
-  C:0A69H         LINE#         57
-  C:0A71H         LINE#         61
-  C:0A82H         LINE#         62
-  C:0A9DH         LINE#         65
-  C:0AA9H         LINE#         66
-  C:0AD7H         LINE#         67
-  C:0AE3H         LINE#         70
-  C:0AEFH         LINE#         71
-  C:0B1DH         LINE#         72
-  C:0B29H         LINE#         73
-  C:0B2CH         LINE#         76
-  C:0B44H         LINE#         79
-  C:0B4AH         LINE#         80
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  12/20/2025  21:27:20  PAGE 5
+  C:0B3FH         LINE#         52
+  C:0B43H         LINE#         53
+  C:0B43H         LINE#         54
+  C:0B4CH         LINE#         55
+  C:0B55H         LINE#         56
+  C:0B5FH         LINE#         57
+  C:0B67H         LINE#         61
+  C:0B78H         LINE#         62
+  C:0B93H         LINE#         65
+  C:0B9FH         LINE#         66
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  12/22/2025  20:47:07  PAGE 5
 
 
-  C:0B63H         LINE#         81
-  C:0B63H         LINE#         83
-  C:0B67H         LINE#         84
+  C:0BCDH         LINE#         67
+  C:0BD9H         LINE#         70
+  C:0BE5H         LINE#         71
+  C:0C13H         LINE#         72
+  C:0C1FH         LINE#         73
+  C:0C22H         LINE#         76
+  C:0C3AH         LINE#         79
+  C:0C40H         LINE#         80
+  C:0C59H         LINE#         81
+  C:0C59H         LINE#         83
+  C:0C5DH         LINE#         84
   -------         ENDPROC       _MOD_INVERSE
   -------         PROC          _FERMAT_TEST
   D:0007H         SYMBOL        x
-  C:0EADH         LINE#         88
-  C:0EADH         LINE#         90
-  C:0EB6H         LINE#         91
-  C:0EC1H         LINE#         94
-  C:0EC8H         LINE#         98
-  C:0EE1H         LINE#         99
-  C:0EE4H         LINE#         100
-  C:0EE4H         LINE#         102
-  C:0EE6H         LINE#         103
+  C:102BH         LINE#         88
+  C:102BH         LINE#         90
+  C:1034H         LINE#         91
+  C:103FH         LINE#         94
+  C:1046H         LINE#         98
+  C:105FH         LINE#         99
+  C:1062H         LINE#         100
+  C:1062H         LINE#         102
+  C:1064H         LINE#         103
   -------         ENDPROC       _FERMAT_TEST
   -------         ENDMOD        MATH
 
@@ -264,69 +272,105 @@ SYMBOL TABLE OF MODULE:  .\Objects\RSA_8051 (?C_STARTUP)
   C:0000H         SYMBOL        _ICE_DUMMY_
   B:0098H.0       PUBLIC        RI
   B:0098H.1       PUBLIC        TI
-  C:0F91H         PUBLIC        uart_receive_byte
-  C:0F3BH         PUBLIC        uart_receive_word
+  C:110FH         PUBLIC        uart_receive_byte
+  C:10B9H         PUBLIC        uart_receive_word
   D:0099H         PUBLIC        SBUF
   D:0098H         PUBLIC        SCON
   D:0089H         PUBLIC        TMOD
+  C:0EDEH         PUBLIC        uart_receive_decimal
+  C:111EH         SYMBOL        _?ix1000
   D:008DH         PUBLIC        TH1
   D:008BH         PUBLIC        TL1
-  C:0F6AH         PUBLIC        uart_init
+  C:10E8H         PUBLIC        uart_init
   B:0088H.6       PUBLIC        TR1
-  C:0F89H         PUBLIC        _uart_send_byte
-  C:0F7BH         PUBLIC        _uart_send_word
+  C:1107H         PUBLIC        _uart_send_byte
+  C:10F9H         PUBLIC        _uart_send_word
   -------         PROC          UART_INIT
-  C:0F6AH         LINE#         6
-  C:0F6AH         LINE#         7
-  C:0F6DH         LINE#         8
-  C:0F70H         LINE#         9
-  C:0F73H         LINE#         10
-  C:0F76H         LINE#         11
-  C:0F78H         LINE#         12
-  C:0F7AH         LINE#         13
+  C:10E8H         LINE#         6
+  C:10E8H         LINE#         7
+  C:10EBH         LINE#         8
+  C:10EEH         LINE#         9
+  C:10F1H         LINE#         10
+  C:10F4H         LINE#         11
+  C:10F6H         LINE#         12
+  C:10F8H         LINE#         13
   -------         ENDPROC       UART_INIT
   -------         PROC          _UART_SEND_BYTE
   D:0007H         SYMBOL        c
-  C:0F89H         LINE#         16
-  C:0F89H         LINE#         17
-  C:0F8BH         LINE#         18
-  C:0F8EH         LINE#         19
-  C:0F90H         LINE#         20
+  C:1107H         LINE#         16
+  C:1107H         LINE#         17
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  12/22/2025  20:47:07  PAGE 6
+
+
+  C:1109H         LINE#         18
+  C:110CH         LINE#         19
+  C:110EH         LINE#         20
   -------         ENDPROC       _UART_SEND_BYTE
   -------         PROC          UART_RECEIVE_BYTE
-  C:0F91H         LINE#         23
-  C:0F91H         LINE#         24
-  C:0F94H         LINE#         25
-  C:0F96H         LINE#         26
-  C:0F98H         LINE#         27
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  12/20/2025  21:27:20  PAGE 6
-
-
+  C:110FH         LINE#         23
+  C:110FH         LINE#         24
+  C:1112H         LINE#         25
+  C:1114H         LINE#         26
+  C:1116H         LINE#         27
   -------         ENDPROC       UART_RECEIVE_BYTE
   -------         PROC          _UART_SEND_WORD
   D:0004H         SYMBOL        word
-  C:0F7BH         LINE#         32
-  C:0F7FH         LINE#         33
-  C:0F84H         LINE#         34
+  C:10F9H         LINE#         32
+  C:10FDH         LINE#         33
+  C:1102H         LINE#         34
   -------         ENDPROC       _UART_SEND_WORD
   -------         PROC          UART_RECEIVE_WORD
   -------         DO            
   D:0004H         SYMBOL        word
   -------         ENDDO         
-  C:0F3BH         LINE#         38
-  C:0F3BH         LINE#         40
-  C:0F46H         LINE#         41
-  C:0F53H         LINE#         42
-  C:0F57H         LINE#         43
+  C:10B9H         LINE#         38
+  C:10B9H         LINE#         40
+  C:10C4H         LINE#         41
+  C:10D1H         LINE#         42
+  C:10D5H         LINE#         43
   -------         ENDPROC       UART_RECEIVE_WORD
+  -------         PROC          UART_RECEIVE_DECIMAL
+  -------         DO            
+  D:0006H         SYMBOL        count
+  D:000EH         SYMBOL        digits
+  D:0011H         SYMBOL        received
+  D:0004H         SYMBOL        result
+  -------         ENDDO         
+  C:0EDEH         LINE#         51
+  C:0EDEH         LINE#         52
+  C:0EE0H         LINE#         53
+  C:0EF0H         LINE#         55
+  C:0EF3H         LINE#         57
+  C:0EF4H         LINE#         58
+  C:0EF9H         LINE#         61
+  C:0F04H         LINE#         62
+  C:0F09H         LINE#         63
+  C:0F09H         LINE#         64
+  C:0F09H         LINE#         68
+  C:0F14H         LINE#         69
+  C:0F18H         LINE#         72
+  C:0F1BH         LINE#         74
+  C:0F1FH         LINE#         75
+  C:0F21H         LINE#         76
+  C:0F24H         LINE#         78
+  C:0F33H         LINE#         79
+  C:0F35H         LINE#         80
+  C:0F38H         LINE#         82
+  C:0F56H         LINE#         83
+  C:0F56H         LINE#         85
+  C:0F65H         LINE#         86
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  12/22/2025  20:47:07  PAGE 7
+
+
+  -------         ENDPROC       UART_RECEIVE_DECIMAL
   -------         ENDMOD        UART
 
   -------         MODULE        RSA
   C:0000H         SYMBOL        _ICE_DUMMY_
   D:0090H         PUBLIC        P1
-  C:0D5EH         PUBLIC        _rsa_generate_key
-  C:0F11H         PUBLIC        _rsa_decrypt
-  C:0EE7H         PUBLIC        _rsa_encrypt
+  C:0E54H         PUBLIC        _rsa_generate_key
+  C:108FH         PUBLIC        _rsa_decrypt
+  C:1065H         PUBLIC        _rsa_encrypt
   -------         PROC          _RSA_GENERATE_KEY
   D:000EH         SYMBOL        p
   D:000FH         SYMBOL        q
@@ -337,36 +381,33 @@ SYMBOL TABLE OF MODULE:  .\Objects\RSA_8051 (?C_STARTUP)
   D:0006H         SYMBOL        d
   D:0017H         SYMBOL        e_val
   -------         ENDDO         
-  C:0D5EH         LINE#         18
-  C:0D68H         LINE#         22
-  C:0D73H         LINE#         23
-  C:0D8EH         LINE#         26
-  C:0D95H         LINE#         29
-  C:0DAFH         LINE#         30
-  C:0DB2H         LINE#         31
-  C:0DB2H         LINE#         34
-  C:0DBDH         LINE#         37
-  C:0DCBH         LINE#         38
-  C:0DDCH         LINE#         39
-  C:0DE5H         LINE#         41
-  C:0DE7H         LINE#         42
+  C:0E54H         LINE#         18
+  C:0E5EH         LINE#         22
+  C:0E69H         LINE#         23
+  C:0E84H         LINE#         26
+  C:0E8BH         LINE#         29
+  C:0EA5H         LINE#         30
+  C:0EA8H         LINE#         31
+  C:0EA8H         LINE#         34
+  C:0EB3H         LINE#         37
+  C:0EC1H         LINE#         38
+  C:0ED2H         LINE#         39
+  C:0EDBH         LINE#         41
+  C:0EDDH         LINE#         42
   -------         ENDPROC       _RSA_GENERATE_KEY
   -------         PROC          _RSA_ENCRYPT
   D:0006H         SYMBOL        plaintext
   D:0035H         SYMBOL        ciphertext
   D:0038H         SYMBOL        key
-  C:0EE7H         LINE#         45
-  C:0EEDH         LINE#         46
+  C:1065H         LINE#         45
+  C:106BH         LINE#         46
   -------         ENDPROC       _RSA_ENCRYPT
   -------         PROC          _RSA_DECRYPT
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  12/20/2025  21:27:20  PAGE 7
-
-
   D:0006H         SYMBOL        ciphertext
   D:000EH         SYMBOL        plaintext
   D:0011H         SYMBOL        key
-  C:0F11H         LINE#         50
-  C:0F17H         LINE#         51
+  C:108FH         LINE#         50
+  C:1095H         LINE#         51
   -------         ENDPROC       _RSA_DECRYPT
   -------         ENDMOD        RSA
 
@@ -378,8 +419,11 @@ SYMBOL TABLE OF MODULE:  .\Objects\RSA_8051 (?C_STARTUP)
   B:00B0H.3       PUBLIC        S0
   D:00B0H         PUBLIC        P3
   B:00B0H.4       PUBLIC        S1
-  C:0DE8H         PUBLIC        handle_setup
-  C:0C43H         PUBLIC        main
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  12/22/2025  20:47:07  PAGE 8
+
+
+  C:0F66H         PUBLIC        handle_setup
+  C:0D39H         PUBLIC        main
   D:003CH         PUBLIC        setup_done
   B:00A0H.0       PUBLIC        ERROR_LED
   D:003DH         PUBLIC        key
@@ -389,143 +433,147 @@ SYMBOL TABLE OF MODULE:  .\Objects\RSA_8051 (?C_STARTUP)
   D:000CH         SYMBOL        p_val
   D:000DH         SYMBOL        q_val
   -------         ENDDO         
-  C:0DE8H         LINE#         21
-  C:0DE8H         LINE#         24
-  C:0DEDH         LINE#         25
-  C:0DEFH         LINE#         27
-  C:0DEFH         LINE#         30
-  C:0DEFH         LINE#         31
-  C:0DF4H         LINE#         32
-  C:0DF7H         LINE#         33
-  C:0DFFH         LINE#         34
-  C:0E01H         LINE#         35
-  C:0E06H         LINE#         36
-  C:0E08H         LINE#         37
-  C:0E0AH         LINE#         38
-  C:0E0AH         LINE#         39
-  C:0E0CH         LINE#         40
-  C:0E11H         LINE#         41
-  C:0E11H         LINE#         42
-  C:0E13H         LINE#         45
-  C:0E13H         LINE#         46
-  C:0E18H         LINE#         47
-  C:0E1EH         LINE#         48
-  C:0E20H         LINE#         49
-  C:0E25H         LINE#         50
-  C:0E2AH         LINE#         51
-  C:0E2CH         LINE#         52
-  C:0E2CH         LINE#         53
-  C:0E2EH         LINE#         54
-  C:0E33H         LINE#         55
-  C:0E33H         LINE#         56
-  C:0E35H         LINE#         59
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  12/20/2025  21:27:20  PAGE 8
-
-
-  C:0E35H         LINE#         61
-  C:0E45H         LINE#         62
-  C:0E47H         LINE#         63
-  C:0E4CH         LINE#         64
-  C:0E51H         LINE#         65
-  C:0E56H         LINE#         66
-  C:0E59H         LINE#         67
-  C:0E5CH         LINE#         68
-  C:0E5DH         LINE#         69
-  C:0E5DH         LINE#         70
-  C:0E5FH         LINE#         71
-  C:0E64H         LINE#         74
-  C:0E67H         LINE#         75
-  C:0E67H         LINE#         76
+  C:0F66H         LINE#         21
+  C:0F66H         LINE#         24
+  C:0F6BH         LINE#         25
+  C:0F6DH         LINE#         27
+  C:0F6DH         LINE#         30
+  C:0F6DH         LINE#         31
+  C:0F72H         LINE#         32
+  C:0F75H         LINE#         33
+  C:0F7DH         LINE#         34
+  C:0F7FH         LINE#         35
+  C:0F84H         LINE#         36
+  C:0F86H         LINE#         37
+  C:0F88H         LINE#         38
+  C:0F88H         LINE#         39
+  C:0F8AH         LINE#         40
+  C:0F8FH         LINE#         41
+  C:0F8FH         LINE#         42
+  C:0F91H         LINE#         45
+  C:0F91H         LINE#         46
+  C:0F96H         LINE#         47
+  C:0F9CH         LINE#         48
+  C:0F9EH         LINE#         49
+  C:0FA3H         LINE#         50
+  C:0FA8H         LINE#         51
+  C:0FAAH         LINE#         52
+  C:0FAAH         LINE#         53
+  C:0FACH         LINE#         54
+  C:0FB1H         LINE#         55
+  C:0FB1H         LINE#         56
+  C:0FB3H         LINE#         59
+  C:0FB3H         LINE#         61
+  C:0FC3H         LINE#         62
+  C:0FC5H         LINE#         63
+  C:0FCAH         LINE#         64
+  C:0FCFH         LINE#         65
+  C:0FD4H         LINE#         66
+  C:0FD7H         LINE#         67
+  C:0FDAH         LINE#         68
+  C:0FDBH         LINE#         69
+  C:0FDBH         LINE#         70
+  C:0FDDH         LINE#         71
+  C:0FE2H         LINE#         74
+  C:0FE5H         LINE#         75
+  C:0FE5H         LINE#         76
   -------         ENDPROC       HANDLE_SETUP
   -------         PROC          MAIN
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  12/22/2025  20:47:07  PAGE 9
+
+
   -------         DO            
   D:0008H         SYMBOL        ciphertext
   D:000AH         SYMBOL        plaintext
   D:0007H         SYMBOL        mode
   -------         ENDDO         
-  C:0C43H         LINE#         79
-  C:0C43H         LINE#         83
-  C:0C46H         LINE#         84
-  C:0C48H         LINE#         85
-  C:0C4AH         LINE#         87
-  C:0C4AH         LINE#         88
-  C:0C57H         LINE#         90
-  C:0C64H         LINE#         91
-  C:0C64H         LINE#         92
-  C:0C67H         LINE#         93
-  C:0C69H         LINE#         95
-  C:0C69H         LINE#         96
-  C:0C71H         LINE#         97
-  C:0C78H         LINE#         98
-  C:0C7DH         LINE#         99
-  C:0C80H         LINE#         100
-  C:0C80H         LINE#         101
-  C:0C82H         LINE#         103
-  C:0C82H         LINE#         104
-  C:0C86H         LINE#         105
-  C:0C91H         LINE#         106
-  C:0CA4H         LINE#         107
-  C:0CA9H         LINE#         108
-  C:0CA9H         LINE#         109
-  C:0CABH         LINE#         111
-  C:0CABH         LINE#         112
-  C:0CAFH         LINE#         113
-  C:0CB6H         LINE#         114
-  C:0CC8H         LINE#         115
-  C:0CCFH         LINE#         116
-  C:0CCFH         LINE#         117
+  C:0D39H         LINE#         79
+  C:0D39H         LINE#         83
+  C:0D3CH         LINE#         84
+  C:0D3EH         LINE#         85
+  C:0D40H         LINE#         87
+  C:0D40H         LINE#         88
+  C:0D4DH         LINE#         90
+  C:0D5AH         LINE#         91
+  C:0D5AH         LINE#         92
+  C:0D5DH         LINE#         93
+  C:0D5FH         LINE#         95
+  C:0D5FH         LINE#         96
+  C:0D67H         LINE#         97
+  C:0D6EH         LINE#         98
+  C:0D73H         LINE#         99
+  C:0D76H         LINE#         100
+  C:0D76H         LINE#         101
+  C:0D78H         LINE#         103
+  C:0D78H         LINE#         104
+  C:0D7CH         LINE#         105
+  C:0D87H         LINE#         106
+  C:0D9AH         LINE#         107
+  C:0D9FH         LINE#         108
+  C:0D9FH         LINE#         109
+  C:0DA1H         LINE#         111
+  C:0DA1H         LINE#         112
+  C:0DA5H         LINE#         113
+  C:0DACH         LINE#         114
+  C:0DBEH         LINE#         115
+  C:0DC5H         LINE#         116
+  C:0DC5H         LINE#         117
   -------         ENDPROC       MAIN
   -------         ENDMOD        MAIN
 
+  -------         MODULE        ?C?COPY
+  C:08D0H         PUBLIC        ?C?COPY
+  -------         ENDMOD        ?C?COPY
+
   -------         MODULE        ?C?IMUL
-  C:0800H         PUBLIC        ?C?IMUL
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  12/20/2025  21:27:20  PAGE 9
-
-
+  C:08F6H         PUBLIC        ?C?IMUL
   -------         ENDMOD        ?C?IMUL
 
   -------         MODULE        ?C?UIDIV
-  C:0812H         PUBLIC        ?C?UIDIV
+  C:0908H         PUBLIC        ?C?UIDIV
   -------         ENDMOD        ?C?UIDIV
 
   -------         MODULE        ?C?ILDPTR
-  C:0867H         PUBLIC        ?C?ILDPTR
+  C:095DH         PUBLIC        ?C?ILDPTR
   -------         ENDMOD        ?C?ILDPTR
 
   -------         MODULE        ?C?ILDOPTR
-  C:0892H         PUBLIC        ?C?ILDOPTR
+  C:0988H         PUBLIC        ?C?ILDOPTR
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  12/22/2025  20:47:07  PAGE 10
+
+
   -------         ENDMOD        ?C?ILDOPTR
 
   -------         MODULE        ?C?ISTPTR
-  C:08CAH         PUBLIC        ?C?ISTPTR
+  C:09C0H         PUBLIC        ?C?ISTPTR
   -------         ENDMOD        ?C?ISTPTR
 
   -------         MODULE        ?C?ISTOPTR
-  C:08E9H         PUBLIC        ?C?ISTOPTR
+  C:09DFH         PUBLIC        ?C?ISTOPTR
   -------         ENDMOD        ?C?ISTOPTR
 
   -------         MODULE        ?C?LMUL
-  C:0916H         PUBLIC        ?C?LMUL
+  C:0A0CH         PUBLIC        ?C?LMUL
   -------         ENDMOD        ?C?LMUL
 
   -------         MODULE        ?C?ULDIV
-  C:09A1H         PUBLIC        ?C?ULDIV
+  C:0A97H         PUBLIC        ?C?ULDIV
   -------         ENDMOD        ?C?ULDIV
 
   -------         MODULE        ?C?SLDIV
-  C:0E69H         PUBLIC        ?C?SLDIV
+  C:0FE7H         PUBLIC        ?C?SLDIV
   -------         ENDMOD        ?C?SLDIV
 
   -------         MODULE        ?C?SLCMP
-  C:0A33H         PUBLIC        ?C?SLCMP
+  C:0B29H         PUBLIC        ?C?SLCMP
   -------         ENDMOD        ?C?SLCMP
 
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_RSA_ENCRYPT?RSA
 
 ******************************************************************************
-* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0495H BYTE (57%) *
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0520H BYTE (64%) *
 ******************************************************************************
 
-Program Size: data=68.0 xdata=0 code=1955
+Program Size: data=68.0 xdata=0 code=2340
 LINK/LOCATE RUN COMPLETE.  1 WARNING(S),  0 ERROR(S)

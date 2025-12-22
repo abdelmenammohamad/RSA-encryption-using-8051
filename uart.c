@@ -41,3 +41,46 @@ uint16_t uart_receive_word(void) {
     word |= (uint16_t)uart_receive_byte();        // Low byte
     return word;
 }
+
+
+
+
+/* ================= recive 1byte decimal number ================= */
+
+// Receive a 1-byte decimal number (0-255) via 3 ASCII digits or Enter
+uint8_t uart_receive_decimal(void) {
+    uint8_t count = 0;
+    uint8_t digits[3] = {0, 0, 0};
+    char received;
+    uint16_t result = 0;
+
+    for (count = 0; count < 3; count++) {
+        received = uart_receive_byte();
+
+        // Check if user pressed "Enter" (ASCII 13)
+        if (received == '\r' || received == '\n') {
+            if (count == 0) return 0; // "Enter" on first digit = 0
+            break; // Stop receiving and calculate what we have
+        }
+
+        // Convert ASCII to actual number (e.g., '1' becomes 1)
+        // Standard ASCII offset is 48. 
+        digits[count] = received - 48; 
+    }
+
+    // Logic for shifting digits based on how many were entered
+    if (count == 1) {
+        // Only one digit was entered before Enter or filling up
+        result = digits[0];
+    } 
+    else if (count == 2) {
+        // Two digits: [0] is tens, [1] is units
+        result = (digits[0] * 10) + digits[1];
+    } 
+    else if (count == 3) {
+        // Three digits: [0] is hundreds, [1] is tens, [2] is units
+        result = (digits[0] * 100) + (digits[1] * 10) + digits[2];
+    }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+    // Ensure it fits in 8-bit (max 255)
+    return (uint8_t)(result > 255 ? 255 : result);
+}

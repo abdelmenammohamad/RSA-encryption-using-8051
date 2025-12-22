@@ -28,8 +28,8 @@ void handle_setup(void) {
 
     // 1. Loop for P
     while (1) {
-        p_val = (uint8_t)uart_receive_byte();
-				P0=p_val;
+        p_val = uart_receive_decimal();
+				P0 = p_val;
         if (fermat_test(p_val) == TRUE) {
             ERROR_LED = 0;      // P is valid
             uart_send_byte('P'); // Acknowledge P is OK
@@ -43,7 +43,7 @@ void handle_setup(void) {
 
     // 2. Loop for Q
     while (1) {
-        q_val = (uint8_t)uart_receive_byte(); 
+        q_val = uart_receive_decimal(); 
         if (fermat_test(q_val) == TRUE) {
             ERROR_LED = 0;      // Q is valid
             uart_send_byte('Q'); // Acknowledge Q is OK
