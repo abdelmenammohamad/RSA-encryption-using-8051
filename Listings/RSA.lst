@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.7.0   RSA                                                               12/20/2025 20:42:41 PAGE 1   
+C51 COMPILER V9.60.7.0   RSA                                                               12/22/2025 22:31:04 PAGE 1   
 
 
 C51 COMPILER V9.60.7.0, COMPILATION OF MODULE RSA
@@ -10,62 +10,44 @@ line level    source
 
    1          // RSA.c
    2          #include "RSA.h"
-   3          #include "config.h" 
-   4          #include "math.h" 
-   5          
-   6          /* ---------------- RSA Functions ---------------- */
-   7          
-   8          // Generate RSA key from p, q, e (Now calculates 16-bit n, phi, d)
-   9          #include <reg51.h> // Required for P1 access
-  10          #include "RSA.h"
-  11          #include "config.h" 
-  12          #include "math.h" 
-  13          
-  14          /**
-  15           * Generate RSA key using e from Port 1
-  16           * Returns TRUE (1) if successful, FALSE (0) if GCD(e, phi) != 1
-  17           */
-  18          uint8_t rsa_generate_key(uint8_t p, uint8_t q, RSA_Key *key) {
-  19   1          uint16_t n, phi, d, e_val;
-  20   1      
-  21   1          // Calculate modulus and totient
-  22   1          n = (uint16_t)p * (uint16_t)q;
-  23   1          phi = (uint16_t)(p - 1) * (uint16_t)(q - 1);
-  24   1      
-  25   1          // Read the 8-bit value from Port 1 and treat it as the public exponent
-  26   1          e_val = (uint16_t)P1;
-  27   1      
-  28   1          // RSA requirement: e must be coprime to phi, and usually e > 1
-  29   1          if (e_val <= 1 || gcd(e_val, phi) != 1) {
-  30   2              return FALSE; // Validation failed
-  31   2          }
-  32   1      
-  33   1          // Calculate private exponent
-  34   1          d = mod_inverse(e_val, phi);
-  35   1      
-  36   1          // Store in structure
-  37   1          key->n = n;
-  38   1          key->e = e_val;
-  39   1          key->d = d;
-  40   1      
-  41   1          return TRUE; // Success
-  42   1      }
-  43          
-  44          // Encrypt 16-bit plaintext
-  45          void rsa_encrypt(uint16_t plaintext, uint16_t *ciphertext, RSA_Key *key) {
-  46   1          *ciphertext = mod_exp(plaintext, key->e, key->n);
-  47   1      }
-  48          
-  49          // Decrypt 16-bit ciphertext
-  50          void rsa_decrypt(uint16_t ciphertext, uint16_t *plaintext, RSA_Key *key) {
-  51   1          *plaintext = mod_exp(ciphertext, key->d, key->n);
-  52   1      }
+   3          #include "math.h" 
+   4          
+   5          /**
+   6           * Generate RSA key using provided e_val
+   7           * Returns TRUE if successful, FALSE if GCD(e, phi) != 1
+   8           */
+   9          uint8_t rsa_generate_key(uint8_t p, uint8_t q, uint16_t e_val, RSA_Key *key) {
+  10   1          uint16_t n, phi, d;
+  11   1      
+  12   1          n = (uint16_t)p * (uint16_t)q;
+  13   1          phi = (uint16_t)(p - 1) * (uint16_t)(q - 1);
+  14   1      
+  15   1          // Validation: e must be coprime to phi and e > 1
+  16   1          if (e_val <= 1 || gcd(e_val, phi) != 1) {
+  17   2              return FALSE; 
+  18   2          }
+  19   1      
+  20   1          // Calculate private exponent
+  21   1          d = mod_inverse(e_val, phi);
+  22   1      
+  23   1          key->n = n;
+  24   1          key->e = e_val;
+  25   1          key->d = d;
+  26   1      
+  27   1          return TRUE; 
+  28   1      }
+  29          
+  30          void rsa_encrypt(uint16_t plaintext, uint16_t *ciphertext, RSA_Key *key) {
+  31   1          *ciphertext = mod_exp(plaintext, key->e, key->n);
+  32   1      }
+  33          
+  34          void rsa_decrypt(uint16_t ciphertext, uint16_t *plaintext, RSA_Key *key) {
+  35   1          *plaintext = mod_exp(ciphertext, key->d, key->n);
+  36   1      }
 
-
-C51 COMPILER V9.60.7.0   RSA                                                               12/20/2025 20:42:41 PAGE 2   
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    222    ----
+   CODE SIZE        =    214    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----

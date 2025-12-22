@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.7.0   MATH                                                              12/20/2025 19:22:43 PAGE 1   
+C51 COMPILER V9.60.7.0   MATH                                                              12/22/2025 21:53:39 PAGE 1   
 
 
 C51 COMPILER V9.60.7.0, COMPILATION OF MODULE MATH
@@ -15,108 +15,130 @@ line level    source
    5          /* ================= Modular Exponentiation ================= */
    6          //Computes (base^exp) % mod using square-and-multiply
    7          uint16_t mod_exp(uint16_t base, uint16_t exp, uint16_t mod) // Changed return type to uint16_t
-   8          {   
-   9   1          char exp_size=16;
+   8          {
+   9   1          char exp_size = 16;
   10   1          uint32_t result;
-  11   1          if(exp==0) return (uint16_t)1;
-  12   1          
-  13   1          //move the MSB of exp till it react max index
-  14   1          while(!(exp & 0x8000)){
-  15   2            exp=exp<<1;
-  16   2            exp_size=exp_size-1;
-  17   2          }
-  18   1          
-  19   1          //for MSB in exp
-  20   1          result=base;
-  21   1          exp=exp<<1;
-  22   1          //for the rest of the bits
-  23   1          while( (exp!=0) && (exp_size>0) ){
-  24   2            result=(result*result)%mod;
-  25   2            if((exp & 0x8000)) result=(result*base)%mod;
-  26   2            exp=exp<<1;
-  27   2            exp_size=exp_size-1;
-  28   2          }
-  29   1          
-  30   1          return result;
-  31   1      }
-  32          
-  33          /* ================= GCD ================= */
-  34          /* Euclidean Algorithm */
-  35          uint16_t gcd(uint16_t a, uint16_t b) // Changed return type to uint16_t for consistency
+  11   1          base = base % mod;
+  12   1          if (exp == 0) return (uint16_t)1;
+  13   1      
+  14   1          //move the MSB of exp till it react max index
+  15   1          while (!(exp & 0x8000)) {
+  16   2              exp = exp << 1;
+  17   2              exp_size = exp_size - 1;
+  18   2          }
+  19   1      
+  20   1          //for MSB in exp
+  21   1          result = base;
+  22   1          exp = exp << 1;
+  23   1          //for the rest of the bits
+  24   1          while ((exp != 0) || (exp_size > 1)) {
+  25   2              result = (result * result) % mod;
+  26   2              if ((exp & 0x8000)) result = (result * base) % mod;
+  27   2              exp = exp << 1;
+  28   2              exp_size = exp_size - 1;
+  29   2          }
+  30   1      
+  31   1          return result;
+  32   1      }
+  33          /* ================= Modular Exponentiation(another method with less one varibale) ================= */
+  34          /* Computes (base^exp) % mod using square-and-multiply */
+  35          /*uint16_t mod_exp(uint16_t base, uint16_t exp, uint16_t mod)
   36          {
-  37   1          uint16_t temp;
-  38   1      // ... (rest of the function is correct) ...
-  39   1          while (b != 0)
-  40   1          {
-  41   2              temp = b;
-  42   2              b = a % b;
-  43   2              a = temp;
-  44   2          }
-  45   1          return a;
-  46   1      }
+  37              uint32_t result = 1;
+  38              base = base % mod;
+  39          
+  40              while (exp > 0) {
+  41                  if (exp & 1) {
+  42                      result = (result * base) % mod;
+  43                  }
+  44                  exp >>= 1;
+  45                  base = (base * base) % mod;
+  46              }
   47          
-  48          /* ================= Modular Inverse ================= */
-  49          /* Extended Euclidean Algorithm (iterative) */
-  50          /* ================= Modular Inverse ================= */
-  51          /* Extended Euclidean Algorithm (iterative) */
-  52          uint16_t mod_inverse(uint16_t e, uint16_t phi) 
-  53          {
-  54   1          long t = 0;
-C51 COMPILER V9.60.7.0   MATH                                                              12/20/2025 19:22:43 PAGE 2   
+  48              return (uint16_t)result;
+  49          }
+  50          */
+  51          
+  52          
+  53          /* ================= GCD ================= */
+  54          /* Euclidean Algorithm */
+C51 COMPILER V9.60.7.0   MATH                                                              12/22/2025 21:53:39 PAGE 2   
 
-  55   1          long newt = 1;
-  56   1          long r = phi;     // Initial remainder 0 is phi
-  57   1          long newr = e;    // Initial remainder 1 is e
-  58   1          long q, tmp;
-  59   1      
-  60   1          // The loop continues until the remainder becomes 0
-  61   1          while (newr != 0) {
-  62   2              q = r / newr; // Calculate quotient
-  63   2      
-  64   2              // Update t and newt (coefficients)
-  65   2              tmp = newt;
-  66   2              newt = t - (q * newt);
-  67   2              t = tmp;
-  68   2      
-  69   2              // Update r and newr (remainders)
-  70   2              tmp = newr;
-  71   2              newr = r - (q * newr);
-  72   2              r = tmp;
-  73   2          }
-  74   1      
-  75   1          // After the loop, r should be the GCD. If GCD > 1, no inverse exists.
-  76   1          if (r > 1) return 0; 
-  77   1      
-  78   1          // Ensure the result is positive
-  79   1          if (t < 0) {
-  80   2              t = t + phi;
-  81   2          }
-  82   1      
-  83   1          return (uint16_t)t; // Cast back to 16-bit for RSA key structure
-  84   1      }
-  85          
-  86          /* ================= fermat_test ================= */
-  87          
-  88          uint8_t fermat_test(uint8_t x) {
-  89   1          // 1. Basic cases: 0, 1 are not prime; 2, 3 are prime
-  90   1          if (x <= 1) return FALSE;
-  91   1          if (x == 2 || x == 3) return TRUE;
-  92   1          
-  93   1          // 2. Even numbers greater than 2 are not prime
-  94   1          if (x % 2 == 0) return FALSE;
-  95   1      
-  96   1          // 3. Fermat's Little Theorem: a^(n-1) = 1 (mod n)
-  97   1          // We use base 2 for the calculation
-  98   1          if (mod_exp(2, x - 1, x) == 1) {
-  99   2              return TRUE;
- 100   2          }
- 101   1      
- 102   1          return FALSE;
- 103   1      }
+  55          uint16_t gcd(uint16_t a, uint16_t b) // Changed return type to uint16_t for consistency
+  56          {
+  57   1          uint16_t temp;
+  58   1      // ... (rest of the function is correct) ...
+  59   1          while (b != 0)
+  60   1          {
+  61   2              temp = b;
+  62   2              b = a % b;
+  63   2              a = temp;
+  64   2          }
+  65   1          return a;
+  66   1      }
+  67          
+  68          /* ================= Modular Inverse ================= */
+  69          /* Extended Euclidean Algorithm (iterative) */
+  70          /* ================= Modular Inverse ================= */
+  71          /* Extended Euclidean Algorithm (iterative) */
+  72          uint16_t mod_inverse(uint16_t e, uint16_t phi) 
+  73          {
+  74   1          long t = 0;
+  75   1          long newt = 1;
+  76   1          long r = phi;     // Initial remainder 0 is phi
+  77   1          long newr = e;    // Initial remainder 1 is e
+  78   1          long q, tmp;
+  79   1      
+  80   1          // The loop continues until the remainder becomes 0
+  81   1          while (newr != 0) {
+  82   2              q = r / newr; // Calculate quotient
+  83   2      
+  84   2              // Update t and newt (coefficients)
+  85   2              tmp = newt;
+  86   2              newt = t - (q * newt);
+  87   2              t = tmp;
+  88   2      
+  89   2              // Update r and newr (remainders)
+  90   2              tmp = newr;
+  91   2              newr = r - (q * newr);
+  92   2              r = tmp;
+  93   2          }
+  94   1      
+  95   1          // After the loop, r should be the GCD. If GCD > 1, no inverse exists.
+  96   1          if (r > 1) return 0; 
+  97   1      
+  98   1          // Ensure the result is positive
+  99   1          if (t < 0) {
+ 100   2              t = t + phi;
+ 101   2          }
+ 102   1      
+ 103   1          return (uint16_t)t; // Cast back to 16-bit for RSA key structure
+ 104   1      }
+ 105          
+ 106          /* ================= fermat_test ================= */
+ 107          
+ 108          uint8_t fermat_test(uint8_t x) {
+ 109   1          // 1. Basic cases: 0, 1 are not prime; 2, 3 are prime
+ 110   1          if (x <= 1) return FALSE;
+ 111   1          if (x == 2 || x == 3) return TRUE;
+ 112   1          
+ 113   1          // 2. Even numbers greater than 2 are not prime
+ 114   1          if (x % 2 == 0) return FALSE;
+ 115   1      
+ 116   1          // 3. Fermat's Little Theorem: a^(n-1) = 1 (mod n)
+C51 COMPILER V9.60.7.0   MATH                                                              12/22/2025 21:53:39 PAGE 3   
+
+ 117   1          // We use base 2 for the calculation
+ 118   1          if (mod_exp(2, x - 1, x) == 1) {
+ 119   2              return TRUE;
+ 120   2          }
+ 121   1      
+ 122   1          return FALSE;
+ 123   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    582    ----
+   CODE SIZE        =    590    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
