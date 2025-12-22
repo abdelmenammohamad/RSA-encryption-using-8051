@@ -5,29 +5,29 @@
 /* ================= Modular Exponentiation ================= */
 //Computes (base^exp) % mod using square-and-multiply
 uint16_t mod_exp(uint16_t base, uint16_t exp, uint16_t mod) // Changed return type to uint16_t
-{		
-		char exp_size=16;
-		uint32_t result;
-		if(exp==0) return (uint16_t)1;
-		
-		//move the MSB of exp till it react max index
-    while(!(exp & 0x8000)){
-			exp=exp<<1;
-			exp_size=exp_size-1;
-		}
-		
-		//for MSB in exp
-		result=base;
-		exp=exp<<1;
-		//for the rest of the bits
-		while( (exp!=0) && (exp_size>0) ){
-			result=(result*result)%mod;
-			if((exp & 0x8000)) result=(result*base)%mod;
-			exp=exp<<1;
-			exp_size=exp_size-1;
-		}
-		
-		return result;
+{
+    char exp_size = 16;
+    uint32_t result;
+    if (exp == 0) return (uint16_t)1;
+
+    //move the MSB of exp till it react max index
+    while (!(exp & 0x8000)) {
+        exp = exp << 1;
+        exp_size = exp_size - 1;
+    }
+
+    //for MSB in exp
+    result = base;
+    exp = exp << 1;
+    //for the rest of the bits
+    while ((exp != 0) || (exp_size > 1)) {
+        result = (result * result) % mod;
+        if ((exp & 0x8000)) result = (result * base) % mod;
+        exp = exp << 1;
+        exp_size = exp_size - 1;
+    }
+
+    return result;
 }
 
 /* ================= GCD ================= */
