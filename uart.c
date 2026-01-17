@@ -35,13 +35,13 @@ void uart_send_word(uint16_t word) {
 }
 
 // Receive a 2-byte word (MSB first)
-uint16_t uart_receive_word(void) {
+/*uint16_t uart_receive_word(void) {
     uint16_t word;
     word  = ((uint16_t)uart_receive_byte()) << 8; // High byte
     word |= (uint16_t)uart_receive_byte();        // Low byte
     return word;
 }
-
+*/
 
 
 

@@ -11,7 +11,7 @@ char uart_receive_byte(void);   // Receive single character
 
 /* Word (2-byte) UART Functions */
 void uart_send_word(uint16_t word);   // Send 2-byte word
-uint16_t uart_receive_word(void);     // Receive 2-byte word
+//uint16_t uart_receive_word(void);     // Receive 2-byte word
 
 uint8_t uart_receive_decimal(void);
 

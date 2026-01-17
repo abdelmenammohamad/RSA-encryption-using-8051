@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.7.0   MAIN                                                              12/22/2025 22:31:04 PAGE 1   
+C51 COMPILER V9.60.7.0   MAIN                                                              01/16/2026 21:22:14 PAGE 1   
 
 
 C51 COMPILER V9.60.7.0, COMPILATION OF MODULE MAIN
@@ -35,7 +35,7 @@ line level    source
   25   2              p_val = uart_receive_decimal(); 
   26   2              if (fermat_test(p_val) == TRUE) {
   27   3                  ERROR_LED = 0;
-  28   3                  uart_send_byte(' '); //clear the buffer, due to a problem with the first send_byte
+  28   3                  uart_send_byte('S'); //clear the buffer, due to a problem with the first send_byte
   29   3                  uart_send_byte('P'); 
   30   3                  break; 
   31   3              } else {
@@ -62,7 +62,7 @@ line level    source
   52   2              e_val = (uint16_t)uart_receive_decimal(); 
   53   2              if (rsa_generate_key(p_val, q_val, e_val, &key) == TRUE) {
   54   3                  E_ERROR_LED = 0;
-C51 COMPILER V9.60.7.0   MAIN                                                              12/22/2025 22:31:04 PAGE 2   
+C51 COMPILER V9.60.7.0   MAIN                                                              01/16/2026 21:22:14 PAGE 2   
 
   55   3                  uart_send_byte('E'); 
   56   3                  uart_send_byte('O'); 
@@ -103,19 +103,20 @@ line level    source
   91   4                      else {
   92   5                          /* Decrypt Mode */
   93   5                          // Receive 2-byte ciphertext to decrypt
-  94   5                          data_in = uart_receive_word();          
-  95   5                          rsa_decrypt(data_in, &data_out, &key);  
-  96   5                          // Send decrypted 2-byte word (since result can be up to 16-bit n)
-  97   5                          uart_send_word(data_out);               
-  98   5                      }
-  99   4                  }
- 100   3              }
- 101   2          }
- 102   1      }
+  94   5                          data_in = (uint16_t)uart_receive_byte();
+  95   5                          P0=(uint8_t)data_in;
+  96   5                          rsa_decrypt(data_in, &data_out, &key);  
+  97   5                          // Send decrypted 2-byte word (since result can be up to 16-bit n)
+  98   5                          uart_send_word(data_out);               
+  99   5                      }
+ 100   4                  }
+ 101   3              }
+ 102   2          }
+ 103   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    220    ----
+   CODE SIZE        =    231    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----

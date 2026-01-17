@@ -25,7 +25,7 @@ void handle_setup(void) {
         p_val = uart_receive_decimal(); 
         if (fermat_test(p_val) == TRUE) {
             ERROR_LED = 0;
-						uart_send_byte(' '); //clear the buffer, due to a problem with the first send_byte
+						uart_send_byte('S'); //clear the buffer, due to a problem with the first send_byte
             uart_send_byte('P'); 
             break; 
         } else {
@@ -91,7 +91,8 @@ void main(void) {
                 else {
                     /* Decrypt Mode */
                     // Receive 2-byte ciphertext to decrypt
-                    data_in = uart_receive_word();          
+                    data_in = (uint16_t)uart_receive_byte();
+										P0=(uint8_t)data_in;
                     rsa_decrypt(data_in, &data_out, &key);  
                     // Send decrypted 2-byte word (since result can be up to 16-bit n)
                     uart_send_word(data_out);               
