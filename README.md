@@ -41,12 +41,6 @@ Due to the limited memory and lack of hardware multiplication/division on the 80
 - Key sizes are intentionally **small and insecure by modern standards**
 - This implementation is **for educational and demonstration purposes only**
 
-| Item            | Size Used |
-|-----------------|-----------|
-| Data type       | `uint32_t` |
-| Maximum modulus | 32 bits   |
-| RAM usage       | Minimal   |
-| Security level  | Not secure |
 
 ---
 
@@ -85,6 +79,7 @@ Due to the limited memory and lack of hardware multiplication/division on the 80
 
 
 
-<img width="1440" height="624" alt="image" src="https://github.com/user-attachments/assets/3779be57-9b9a-4741-9e26-00176ca21f72" />
+<img width="1561" height="697" alt="image" src="https://github.com/user-attachments/assets/d3d96125-5b32-49b8-9b08-b59f3c6cbf3e" />
+
 
 
